@@ -38,6 +38,9 @@ tMenu.prototype.menuList = function (ul) {
         if (this.list[i]["float"] != undefined && this.list[i]["float"] == "right" && this.display == "horizontal") {
             li.setAttribute("style", "float:right");
         }
+        if (this.list[i]["callback"] != undefined && typeof this.list[i]["callback"] == "function") {
+            li.addEventListener("click", this.list[i]["callback"]);
+        }
         li.appendChild(a);
         ul.appendChild(li);
         
