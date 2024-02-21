@@ -1,0 +1,58 @@
+a:hover, a:active {
+    background-color: #292628;
+    color: white;
+    border-bottom: solid #df4a16ed;
+}
+ul.horizontal {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #3e3e3e;
+    height: 48px;
+}
+ul.horizontal li {
+    float: left;
+}
+ul.horizontal li a.active {
+    background-color: #04AA6D;
+    font-weight: bold;
+}
+ul.horizontal li a {
+    display: inline-block;
+    color: #aaaaab;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+ul.horizontal li a.active {
+    background-color: #04AA6D;
+}
+ul.horizontal li a:hover:not(.active) {
+    background-color: #292628;
+    color: white;
+    border-bottom: solid #df4a16ed;
+}
+
+ul.vertical {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+ul.vertical a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+ul.vertical li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+ul.vertical li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
