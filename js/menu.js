@@ -1,12 +1,13 @@
 export function tMenu (param) {
-    this.classType  = "menu";
-    // Parameters
+    this.classType  = "tMenu";
+    // Parameters default values
     this.display    = "horizontal";
     this.list       = [];
     this._content   = document.getElementById("content");
     // parameters received
     if (param.display) this.display = param.display;
     if (param.list) this.list = param.list;
+    if (param.content) this._content = param.content;
     // Set css
     var link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -14,36 +15,48 @@ export function tMenu (param) {
     link.href = "/wtk/css/tMenu.css";
     document.head.appendChild(link);
 
-    this.createMenu();
+    this._createMenu();
 }
-tMenu.prototype.createMenu = function () {
-    var ul = document.createElement("ul");
-    ul.setAttribute("class", this.display);
-    console.log(ul);
-    this._content.appendChild(ul);
+tMenu.prototype     = Object.create({});
+tMenu.constructor   = tMenu;
 
-    let li = this.menuList(ul);
+tMenu.prototype._createMenu = function () {
+    this._ul = document.createElement("ul");
+    this._ul.setAttribute("class", this.display);
+    this._content.appendChild(this._ul);
+
+    let li = this._menuList();
 }
-
-tMenu.prototype.menuList = function (ul) {
+// Passa por todos os itens da lista e adiciona no menu
+tMenu.prototype._menuList = function () {
     for (let i = 0; i < this.list.length; i++) {
-        let li = document.createElement("li");
-        let a = document.createElement("a");
-        a.setAttribute("href", "javascript:void(0)");
-        if (this.list[i]["name"] != undefined ) {
-            a.innerText = this.list[i]["name"];
-        } else {
-            a.innerText = i;
-        }
-        if (this.list[i]["float"] != undefined && this.list[i]["float"] == "right" && this.display == "horizontal") {
-            li.setAttribute("style", "float:right");
-        }
-        if (this.list[i]["callback"] != undefined && typeof this.list[i]["callback"] == "function") {
-            li.addEventListener("click", this.list[i]["callback"]);
-        }
-        li.appendChild(a);
-        ul.appendChild(li);
-        
+        this._addList(this.list[i]);
+    }
+}
+// Cria os elementos no menu
+tMenu.prototype._addList = function (i) {
+    let li  = document.createElement("li");
+    let a   = document.createElement("a");
+    a.setAttribute("href", "javascript:void(0)");
+    if (i["name"] != undefined ) {
+        a.innerText = i["name"];
+    } else {
+        a.innerText = "<Nameless>";
+    }
+    if (i["float"] != undefined && i["float"] == "right" && this.display == "horizontal") {
+        li.setAttribute("style", "float:right");
+    }
+    if (i["callback"] != undefined && typeof i["callback"] == "function") {
+        li.addEventListener("click", i["callback"]);
+    }
+    li.appendChild(a);
+    this._ul.appendChild(li);
+}
+// Adiciona um item na lista e cria a entrada do elemento no menu
+tMenu.prototype.addItem = function (item) {
+    if (item != undefined && typeof item == "object") {
+        this.list.push(item);
+        this._addList(item);
     }
 }
 console.log("Init menu");
