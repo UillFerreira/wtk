@@ -1,0 +1,30 @@
+.tTable table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tTable caption {
+    background-color: #676262;
+    color: #ffffff;
+    box-shadow: 0 0 1px 0 #df4a16, 0 1px 3px 0 #df4a16;
+}
+.tTable td, th {
+    box-shadow: 0 0 1px 0 #df4a16, 0 1px 3px 0 #df4a16;
+    text-align: left;
+    padding: 8px;
+}
+
+.tTable tr:nth-child(even) {
+    background-color: #3e3e3e;
+    color: #ffffff;
+}
+.tTable tr:nth-child(odd) {
+    background-color: #a4a4a4;
+    color: #000000;
+}
+
+.tTable icon {
+    color: #000000;
+    cursor: pointer;
+}
