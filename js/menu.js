@@ -47,7 +47,17 @@ tMenu.prototype._addList = function (i) {
         li.setAttribute("style", "float:right");
     }
     if (i["callback"] != undefined && typeof i["callback"] == "function") {
-        li.addEventListener("click", i["callback"]);
+        li.addEventListener("click", function () {
+            // Remove tudo da div content para colocar os novos elementos
+            let t = document.getElementById("content");
+            if (t != null) {
+                while (t.hasChildNodes()) {
+                    t.removeChild(t.lastChild);
+                }
+            }
+            // Chama a função que vai criar os elementos na tela
+            i["callback"]();
+        });
     }
     li.appendChild(a);
     this._ul.appendChild(li);
