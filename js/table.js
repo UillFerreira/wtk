@@ -45,23 +45,55 @@ export function tTable (param) {
 }
 tTable.prototype     = Object.create({});
 tTable.constructor   = tTable;
+// Precisa enviar o novo valor da coluna e qual será a chave de comparação, para poder fazer a atualização da linha.
+tTable.prototype.updateRow = function (row, key) {
+    for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i][key] == row[key]) {
+            console.log("UPDATE");
+            this.list[i] = row;
+            this._updateElmRow(row, key);
+        }
+    }
+}
+tTable.prototype._updateElmRow = function (row, key) {
+    let header = this._table.rows[0].children;
+    let cln;
 
+    rows: for (let i = 1; i < this._table.rows.length; i++) {
+        // pega cada coluna da linha
+        cln = this._table.rows[i].children;
+        hdr: for (let k = 0; k < header.length; k++) {
+            if (header[k].textContent != key) continue hdr;
+            cols: for (let c = 0; c < cln.length; c++) {
+                if (cln[k].textContent == row[key]) {
+                    if (cln[c].textContent != "") {
+                        cln[c].textContent = row[header[c].textContent];
+                    }
+                }
+            }
+        }
+
+    }
+}
 tTable.prototype._createTable = function () {
     this._table = document.createElement("table");
     this._table.setAttribute("class", "tTable");
     this._content.appendChild(this._table);
 }
 tTable.prototype._addBtn = function (row, name) {
+    let s = this;
     let btn = document.createElement("button");
-    btn.addEventListener("click", row[name]["callback"].bind(row));
+    btn.addEventListener("click", row[name]["callback"].bind(row, this));
     btn.innerText = name;
     return btn;
 }
 tTable.prototype._addIcon = function (row, name) {
     //<i class="bi-alarm"></i>
+    console.log(row);
     let icon = document.createElement("icon");  
-    icon.setAttribute("class", "bi bi-filetype-pdf");
-    icon.addEventListener("click", row[name]["callback"].bind(row));
+    //icon.setAttribute("class", "bi bi-filetype-pdf");
+    icon.setAttribute("class", row[name]["icon"]);
+    icon.addEventListener("click", row[name]["callback"].bind(row, this));
     return icon;
 }
 tTable.prototype._createTd = function (row) {
@@ -117,4 +149,3 @@ tTable.prototype._createTh = function () {
     }
     this._table.appendChild(tr);
 }
-console.log("HERE!");
